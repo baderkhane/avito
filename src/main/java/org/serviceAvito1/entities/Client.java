@@ -1,63 +1,50 @@
 package org.serviceAvito1.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.OneToMany; 
 @Entity
-public class Client implements Serializable{
+public class Client implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@Column(unique=true)
 	private String login;
 	private String password;
-	private String Tel;
-	private String cin;
+	private String tel; 
 	private String prenom;
 	private String nom;
 	private String verifier;
-	public Client() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 	
 	@Override
 	public String toString() {
-		return "Client [login=" + login + ", password=" + password + ", Tel=" + Tel + ", cin=" + cin + ", prenom="
+		return "Client [login=" + login + ", password=" + password + ", Tel=" + tel + ", prenom="
 				+ prenom + ", nom=" + nom + ", verifier=" + verifier + "]";
-	}
-
-	public Client(String login, String password, String tel, String cin, String prenom, String nom, String verifier) {
+	}	
+	@OneToMany(mappedBy="clt",fetch=FetchType.LAZY)
+	private Collection<Annonce> annonce;
+	
+	public Client() {
 		super();
+	}
+	
+	public Client( String tel,String prenom, String nom, String verifier ,String login,String password) {
+		super(); 
+		this.tel = tel;
 		this.login = login;
-		this.password = password;
-		Tel = tel;
-		this.cin = cin;
+		this.password = password; 
 		this.prenom = prenom;
 		this.nom = nom;
 		this.verifier = verifier;
 	}
-
-	public Client(Long id, String login, String password, String tel, String cin, String prenom, String nom,
-			String verifier) {
-		super();
-		this.id = id;
-		this.login = login;
-		this.password = password;
-		Tel = tel;
-		this.cin = cin;
-		this.prenom = prenom;
-		this.nom = nom;
-		this.verifier = verifier;
-	}
-
-
-
+ 
 
 	public String getLogin() {
 		return login;
@@ -66,24 +53,8 @@ public class Client implements Serializable{
 	public void setLogin(String login) {
 		this.login = login;
 	}
-
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getTel() {
-		return Tel;
-	}
 	public void setTel(String tel) {
-		Tel = tel;
-	}
-	public String getCin() {
-		return cin;
-	}
-	public void setCin(String cin) {
-		this.cin = cin;
+		this.tel = tel; 
 	}
 	public String getPrenom() {
 		return prenom;
@@ -103,7 +74,6 @@ public class Client implements Serializable{
 	public void setVerifier(String verifier) {
 		this.verifier = verifier;
 	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -111,5 +81,5 @@ public class Client implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+ 	
 }
